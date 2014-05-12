@@ -125,7 +125,7 @@ private:
     return res.success;
   }
 
-  bool unload(const std::string& name)
+  bool unload(const ros::messages::types::string& name)
   {
     bool success = parent_->unload(name);
     if (!success)
@@ -155,7 +155,7 @@ private:
   
   ros::CallbackQueue bond_callback_queue_;
   ros::AsyncSpinner bond_spinner_;
-  typedef boost::ptr_map<std::string, bond::Bond> M_stringToBond;
+  typedef boost::ptr_map<ros::messages::types::string, bond::Bond> M_stringToBond;
   M_stringToBond bond_map_;
 };
 
@@ -251,7 +251,7 @@ Loader::~Loader()
 }
 
 bool Loader::load(const std::string &name, const std::string& type, const ros::M_string& remappings,
-                  const std::vector<std::string> & my_argv)
+                  const V_string & my_argv)
 {
   boost::mutex::scoped_lock lock(lock_);
   if (impl_->nodelets_.count(name) > 0)
@@ -325,10 +325,10 @@ bool Loader::clear ()
   return true;
 };
 
-std::vector<std::string> Loader::listLoadedNodelets()
+V_string Loader::listLoadedNodelets()
 {
   boost::mutex::scoped_lock lock (lock_);
-  std::vector<std::string> output;
+  V_string output;
   Impl::M_stringToNodelet::iterator it = impl_->nodelets_.begin();
   for (; it != impl_->nodelets_.end(); ++it)
   {
