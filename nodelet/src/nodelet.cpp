@@ -70,7 +70,7 @@ class NodeletArgumentParsing
     std::string name_;
     std::string default_name_;
     std::string manager_;
-    std::vector<std::string> local_args_;
+    ros::V_string local_args_;
     bool is_bond_enabled_;
   
   public:
@@ -79,7 +79,7 @@ class NodeletArgumentParsing
       parseArgs(int argc, char** argv)
     {
       is_bond_enabled_ = true;
-      std::vector<std::string> non_ros_args;
+      ros::V_string non_ros_args;
       ros::removeROSArgs (argc, argv, non_ros_args);
       size_t used_args = 0;
 
@@ -136,7 +136,7 @@ class NodeletArgumentParsing
     std::string getManager() const  { return (manager_); }
     bool isBondEnabled() const { return is_bond_enabled_; }
 
-    std::vector<std::string> getMyArgv () const {return local_args_;};
+    ros::V_string getMyArgv () const {return local_args_;};
     std::string getDefaultName()
     {
       std::string s = type_;
@@ -187,11 +187,11 @@ class NodeletInterface
     /** \brief Load the nodelet */
     bool
       loadNodelet (const std::string &name, const std::string &type,
-                   const std::string &manager, const std::vector<std::string> &args,
+                   const std::string &manager, const ros::V_string &args,
                    const std::string &bond_id)
     {
       ros::M_string remappings = ros::names::getRemappings ();
-      std::vector<std::string> sources (remappings.size ()), targets (remappings.size ());
+      ros::V_string sources (remappings.size ()), targets (remappings.size ());
       ROS_INFO_STREAM ("Loading nodelet " << name << " of type " << type << " to manager " << manager << " with the following remappings:");
       int i = 0;
       for (ros::M_string::iterator it = remappings.begin (); it != remappings.end (); ++it, ++i)

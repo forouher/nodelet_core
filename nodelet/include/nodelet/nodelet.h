@@ -36,6 +36,7 @@
 #include <vector>
 #include <map>
 
+#include <ros/boost_container.h>
 #include <ros/console.h>
 #include <boost/shared_ptr.hpp>
 
@@ -104,7 +105,7 @@ namespace nodelet
 {
 typedef boost::shared_ptr<ros::NodeHandle> NodeHandlePtr;
 typedef std::map<std::string, std::string> M_string;
-typedef std::vector<std::string> V_string;
+typedef ros::messages::types::vector<ros::messages::types::string> V_string;
 
 class UninitializedException : public Exception
 {

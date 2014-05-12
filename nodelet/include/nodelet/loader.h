@@ -42,6 +42,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/mutex.hpp>
+#include <ros/boost_container.h>
 
 namespace ros
 {
@@ -52,7 +53,7 @@ namespace nodelet
 {
 class Nodelet;
 typedef std::map<std::string, std::string> M_string;
-typedef std::vector<std::string> V_string;
+typedef ros::messages::types::vector<ros::messages::types::string> V_string;
 
 /** \brief A class which will construct and sequentially call Nodelets according to xml
  * This is the primary way in which users are expected to interact with Nodelets
@@ -83,7 +84,7 @@ public:
   bool clear();
 
   /**\brief List the names of all loaded nodelets */
-  std::vector<std::string> listLoadedNodelets();
+  V_string listLoadedNodelets();
   
 private:
   boost::mutex lock_; ///<! Public methods must lock this to preserve internal integrity.
